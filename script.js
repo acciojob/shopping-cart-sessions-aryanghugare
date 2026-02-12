@@ -28,9 +28,9 @@ clearButton.addEventListener("click",clearCart)
 
 // Render cart list
 function renderCart() {
-	sessionStorage.setItem("cart", JSON.stringify(cartItems));
+	cartList.innerHTML = ""
+//	sessionStorage.setItem("cart", JSON.stringify(cartItems));
 	 cartItems.forEach((product) => {
-		
     const li = document.createElement("li");
     li.innerHTML = `${product.name} - $${product.price} <button class="add-to-cart-btn" onclick="removeFromCart(${product.id})" data-id="${product.id}">Remove from cart</button>`;
     cartList.appendChild(li);
@@ -39,7 +39,12 @@ function renderCart() {
 
 // Add item to cart
 function addToCart(productId) {
-cartItems = products.filter(pro => pro.id === productId);
+	// console.innerHTML = productId
+	let a = []
+	a = products.filter(pro => pro.id === productId);
+	// console.innerHTML = a[1].name 
+	cartItems.push(a[0]);
+	
 renderCart()
 	
 }
@@ -47,7 +52,7 @@ renderCart()
 // Remove item from cart
 function removeFromCart(productId) {
 cartItems = cartItems.filter(pro => pro.id !== productId);	
-clearCart();
+clearCart()
 renderCart();
 }
 

@@ -13,7 +13,7 @@ const products = [
 const productList = document.getElementById("product-list");
 const cartList = document.getElementById("cart-list");
 const clearButton = document.getElementById("clear-cart-btn")
-
+let cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
 // Render product list
 function renderProducts() {
   products.forEach((product) => {
@@ -22,14 +22,14 @@ function renderProducts() {
     productList.appendChild(li);
   });
 }
-let cartItems = []
+
 const console = document.querySelector(".console");
 clearButton.addEventListener("click",clearCart)
 
 // Render cart list
 function renderCart() {
 	cartList.innerHTML = ""
-//	sessionStorage.setItem("cart", JSON.stringify(cartItems));
+
 	 cartItems.forEach((product) => {
     const li = document.createElement("li");
     li.innerHTML = `${product.name} - $${product.price} <button class="add-to-cart-btn" onclick="removeFromCart(${product.id})" data-id="${product.id}">Remove from cart</button>`;
@@ -44,7 +44,7 @@ function addToCart(productId) {
 	a = products.filter(pro => pro.id === productId);
 	// console.innerHTML = a[1].name 
 	cartItems.push(a[0]);
-	
+	sessionStorage.setItem("cart", JSON.stringify(cartItems));
 renderCart()
 	
 }
@@ -52,6 +52,7 @@ renderCart()
 // Remove item from cart
 function removeFromCart(productId) {
 cartItems = cartItems.filter(pro => pro.id !== productId);	
+sessionStorage.setItem("cart", JSON.stringify(cartItems));
 clearCart()
 renderCart();
 }
